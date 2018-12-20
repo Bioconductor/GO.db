@@ -1,0 +1,2 @@
+Title,Description,BiocVersion,Genome,SourceType,SourceUrl,SourceVersion,Species,TaxonomyId,Coordinate_1_based,DataProvider,Maintainer,RDataClass,DispatchClass,RDataPath,Tags
+GO.db,A set of annotation maps describing the entire Gene Ontology,3.8,NA,TXT,ftp://ftp.geneontology.org/pub/go/godatabase/archive/latest-lite/go_weekly-termdb-tables.tar.gz,NA,NA,NA,NA,The Gene Ontology Consortium,Bioconductor Package Maintainer <maintainer@bioconductor.org>,data.frame,Rda,GO.db/GO.db,"Tags=c(""GO.db:Gene:Ontology"")"
