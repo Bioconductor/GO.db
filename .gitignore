@@ -1,0 +1,16 @@
+# data file in package
+inst/extdata/GO.sqlite
+
+# History files
+.Rhistory
+.Rapp.history
+
+# RStudio files
+.Rproj.user/
+
+# produced vignettes
+vignettes/*.html
+vignettes/*.pdf
+
+# user info
+.Rproj.user
