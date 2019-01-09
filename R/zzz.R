@@ -9,24 +9,32 @@ GO_dbInfo <- function() dbInfo(datacache)
 .onLoad <- function(libname, pkgname)
 {
     ## Connect to the SQLite DB
-    dbfile <- system.file("extdata", "GO.sqlite", package=pkgname, lib.loc=libname)
     assign("dbfile", dbfile, envir=datacache)
-    dbconn <- dbFileConnect(dbfile)
-    assign("dbconn", dbconn, envir=datacache)
+    delayedAssign("dbfile", {
+        cache(AnnotationHub()["AH67900"])
+    }, assign.env = datacache)
+    delayedAssign("dbconn", {
+        dbFileConnect(dbfile)
+    }, assign.env = datacache)
 
     ## Create the OrgDb object
     sPkgname <- sub(".db$","",pkgname)
-    txdb <- loadDb(system.file("extdata", paste(sPkgname,
-      ".sqlite",sep=""), package=pkgname, lib.loc=libname),
-                   packageName=pkgname)
+    delayedAssign("txdb", {
+        loadDb(dbfile)
+    }, assign.env = datacache)
     dbNewname <- AnnotationDbi:::dbObjectName(pkgname,"GODb")
     ns <- asNamespace(pkgname)
-    assign(dbNewname, txdb, envir=ns)
-    namespaceExport(ns, dbNewname)
+    delayedAssign(dbNewname, {
+        namespaceExport(ns, dbNewname)
+        txdb
+    }, assign.env = ns)
 
     ## Create the AnnObj instances
-    ann_objs <- createAnnObjs.SchemaChoice("GO_DB", "GO", "GO", dbconn, datacache)
-    mergeToNamespaceAndExport(ann_objs, pkgname)
+    delayedAssign("ann_objs", {
+        ann_objs <- createAnnObjs.SchemaChoice("GO_DB", "GO", "GO", dbconn, datacache)
+        mergeToNamespaceAndExport(ann_objs, pkgname)
+        ann_objs
+    }, assign.env = datacache)
     packageStartupMessage(AnnotationDbi:::annoStartupMessages("GO.db"))
 }
 
