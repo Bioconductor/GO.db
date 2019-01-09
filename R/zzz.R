@@ -25,9 +25,9 @@ GO_dbInfo <- function() dbInfo(datacache)
     dbNewname <- AnnotationDbi:::dbObjectName(pkgname,"GODb")
     ns <- asNamespace(pkgname)
     delayedAssign(dbNewname, {
-        namespaceExport(ns, dbNewname)
         txdb
     }, assign.env = ns)
+    namespaceExport(ns, dbNewname)
 
     ## Create the AnnObj instances
     delayedAssign("ann_objs", {
