@@ -16,9 +16,7 @@ GO_dbInfo <- function() dbInfo(datacache)
 
     ## Create the OrgDb object
     sPkgname <- sub(".db$","",pkgname)
-    txdb <- loadDb(system.file("extdata", paste(sPkgname,
-      ".sqlite",sep=""), package=pkgname, lib.loc=libname),
-                   packageName=pkgname)
+    txdb <- loadDb(dbfile)
     dbNewname <- AnnotationDbi:::dbObjectName(pkgname,"GODb")
     ns <- asNamespace(pkgname)
     assign(dbNewname, txdb, envir=ns)
